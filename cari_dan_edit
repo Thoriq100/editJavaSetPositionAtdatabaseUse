@@ -1,0 +1,30 @@
+   public void edit_cari () throws Exception{
+        try {
+
+            int kode = 0;
+            String kata = String.valueOf(kode);
+
+            kata = JOptionPane.showInputDialog(null, "Masukkan Id Bahan baku Yang Ingin Di Edit");
+            if (kata.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "id tidak di temukan");
+            } else {
+                db.connect();
+                String sql = "select * from bahan_baku where id_bahan_baku='" + kata + "'";
+                stm = db.getConnection().createStatement();
+
+                rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                    id_baru_get.setText(rs.getString("id_bahan_baku"));
+                    String combo_satuan_custom = rs.getString("satuan_bahan_baku");
+
+                    combo_satuan.setSelectedItem(combo_satuan_custom);
+                    tf_nama_bahan.setText(rs.getString("nama_bahan_baku"));
+                    tf_jumlah_bahan.setText(rs.getString("jumlah_bahan_baku"));
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cari Data gagal" + e);
+        }
+
+
+    }
